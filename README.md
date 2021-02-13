@@ -11,6 +11,8 @@ O objetivo do desafio é treinar uma inteligência artificial que possui dois mo
   * Em datasets maiores, redes neurais performam melhor, porém estas possuem uma complexidade muito maior para serem desenvolvidas. Portanto, iremos utilizar machine learning.
 * Como os algoritmos de machine learning de NLP transformam as frases em vetores, é ideal um algoritmo de classificação que seja amigável com um numero grande de features, como o Naive Bayes ou Support Vector Machines.
 
+![](https://raw.githubusercontent.com/leoprasel/Celero/main/plots/wordcloud.png)
+
 ## Vetorização de palavras:
 ### Bag of Words e TF-IDF:
 Para montar o modelo, utilizaremos o Bag od Words, função que transforma as frases que são inputadas em um vetor de palavras, com todas as palavras do dataset ocupando uma posição do vetor.
