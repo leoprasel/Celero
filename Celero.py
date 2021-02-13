@@ -117,8 +117,10 @@ def main(modo, diretorio):
         pred = model.predict(review_vec)
         if int(pred) == 1:
             print('Positive Review!')
+            return int(1)
         else:
             print('Negative Review!')
+            return int(-1)
 
 
     else:
