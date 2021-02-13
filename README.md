@@ -1,11 +1,17 @@
 # Celero - Desafio para desenvolvedor de AI
+
 ## Objetivo:
 Neste projeto utilizaremos uma base de dados de comentários de filmes feitos no site de reviews IMDB dispobilizado pela [universidade de Stanford](https://ai.stanford.edu/~amaas/data/sentiment/).
 
 O objetivo do desafio é treinar uma inteligência artificial que possui dois modos: 
 * O modo treino, no qual ela irá ser treinada com o dataset acima, sendo inputado o diretório da pasta do dataset de treino.
+```
+python3 main.py --modo treino --diretorio <dataset path>
+```
 * E o modo execução, onde ao ser inputado um arquivo texto com uma review de um filme, a AI deve retornar se este comentário é um comentário de cunho positivo ou negativo.
-
+```
+python3 main.py --modo execucao --diretorio <file path>
+```
 ## Considerações iniciais:
 * O problema se trata de uma inteligência artificial NLP (Natural Language Processing). Para AI's deste tipo, tanto Machine Learning como Redes neurais são possíveis.
   * Em datasets maiores, redes neurais performam melhor, porém estas possuem uma complexidade muito maior para serem desenvolvidas. Portanto, iremos utilizar machine learning.
@@ -49,8 +55,6 @@ Plotando a acurácia do modelo em relação ao C, vemos que esta desempenha melh
 Portanto, a **melhor precisão do modelo SVC foi de 87,1%**. O modelo SVC Linear foi o escolhido como o modelo final, utilizando C = 0,1 e demorou **1.7 minutos** para terminar de treinar.
 
 ## Considerações finais:
-A acurácia do modelo alcançou patamares satisfatórios da maneira que está programado, porém é possivel melhorar a performance do modelo além do que temos hoje.
+A acurácia do modelo alcançou patamares satisfatórios da maneira que está programado, porém é possivel melhorar a performance do modelo além do que temos hoje. O principal ponto de melhoria está na limpeza dos arquivos texto, em que as funções de Stemming e Lemmatization deveriam desempenhar melhor do que o que foi observado superficialmente por mim na hora da construção do modelo. 
 
-O principal ponto de melhoria está na limpeza dos arquivos texto, em que as funções de Stemming e Lemmatization deveriam desempenhar melhor do que o que foi observado superficialmente por mim na hora da construção do modelo.
-
-Tentei fazer a limpeza das stop-words fora da função vetorizante, para ter controle das palavras que seriam excluidas, mas isto aumentava drasticamente o runtime do programa, portanto optei por utilizar a função built-in.
+Tentei fazer a limpeza das stop-words fora da função vetorizante para ter controle das palavras que seriam excluidas, mas isto aumentava drasticamente o runtime do programa, portanto optei por utilizar a função built-in.
