@@ -8,7 +8,9 @@ import re
 import pickle
 import nltk
 nltk.download('wordnet', quiet=True) 
+from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.stem.porter import PorterStemmer
+#from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 #Python CLI options configuration
@@ -31,6 +33,11 @@ def main(modo, diretorio):
         
         ps = PorterStemmer()
         text = [ps.stem(word) for word in text]
+
+        #An alternative is to use a word Lemmatizer instead of the porterstemmer:
+        #The results were supposed to be better, but in my tests the porterstemmer did better.
+        #lmtzr = WordNetLemmatizer()
+        #text = [lmtzr.lemmatize(word) for word in text]
         
         text = ' '.join(text)
         return text
@@ -48,6 +55,8 @@ def main(modo, diretorio):
         #Relative paths
         train_path_neg = diretorio + '/train/neg//'
         train_path_pos = diretorio +  '/train/pos//'
+        test_path_neg = diretorio + '/test/neg//'
+        test_path_pos = diretorio + '/test/pos//'
 
         #Function to read the text files and concatenate them into a pandas dataframe
         def read_files(files_path, evaluation, mode):
@@ -65,18 +74,24 @@ def main(modo, diretorio):
         train_neg_df = read_files(train_path_neg, -1, "train")
         train_pos_df = read_files(train_path_pos, 1, "train")
         train_df = pd.concat([train_neg_df, train_pos_df]).reset_index(drop=True)
- 
+
+        test_neg_df = read_files(test_path_neg, -1, 'test')
+        test_pos_df = read_files(test_path_pos, 1, 'test')
+        test_df = pd.concat([test_neg_df, test_pos_df]).reset_index(drop=True)
+        
         time_read = datetime.now()
         print('Reading files took: ', (time_read - time_start).total_seconds(), 'seconds')
 
         #Cleaning the data
         print('Cleaning files...')
         train_df['cleaned_text'] = train_df.text.apply(lambda x: cleaning(x))
+        test_df['cleaned_text'] = test_df.text.apply(lambda x: cleaning(x))
 
         #Creating the Bag of Words vector
         vectorizer = TfidfVectorizer(stop_words="english", max_features=2000)
 
         train_bow_vector = vectorizer.fit_transform(train_df["cleaned_text"])
+        test_bow_vector = vectorizer.transform(test_df["cleaned_text"])
 
         time_clean = datetime.now()
         print('Cleaning files took: ', (time_clean - time_read).total_seconds(), 'seconds')
@@ -85,9 +100,15 @@ def main(modo, diretorio):
         print('Training model...')
         model = LinearSVC(C=0.01)
         model.fit(train_bow_vector, train_df["evaluation"])
+        pred = model.predict(test_bow_vector)
 
         time_model = datetime.now()
         print('Traning the model took: ', (time_model - time_clean).total_seconds(), 'seconds')
+
+        # Results
+        accuracy = accuracy_score(test_df["evaluation"], pred)
+
+        print("Precisao do modelo: {:.2f}".format(accuracy*100))
 
         print('Saving the machine learning model...')
         with open('celero_model.pickle','wb') as file:
@@ -95,10 +116,10 @@ def main(modo, diretorio):
         with open('celero_vectorizer.pickle','wb') as file:
             pickle.dump(vectorizer, file)
 
+        
         print('Ended at: ',datetime.now())
         time_end = datetime.now()
         print('The entire program took: ', (time_end - time_start).total_seconds(), 'seconds')
-
 
     elif modo == 'execucao':
         with open('celero_model.pickle','rb') as file:
@@ -123,6 +144,12 @@ def main(modo, diretorio):
 
     else:
         print('modo errado, tente novamente!')
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
