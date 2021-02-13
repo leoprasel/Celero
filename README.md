@@ -32,6 +32,7 @@ Quanto mais palavras existem nesse vetor, mais complexo é o modelo, aumentando 
 
 No modelo, podemos ver a acuracidade do modelo conforme aumentamos o numero de palavras:
 ![](https://raw.githubusercontent.com/leoprasel/Celero/main/plots/features_tfidf.jpg)
+
 Conforme o gráfico, em torno de 2000-2500 palavras retorna a maior precisão, sendo 2000 o numero escolhido nesse projeto.
 ## Escolha do modelo de machine learning:
 ### Naive Bayes:
