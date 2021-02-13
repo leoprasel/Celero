@@ -6,11 +6,11 @@ Neste projeto utilizaremos uma base de dados de comentários de filmes feitos no
 O objetivo do desafio é treinar uma inteligência artificial que possui dois modos: 
 * O modo treino, no qual ela irá ser treinada com o dataset acima, sendo inputado o diretório da pasta do dataset de treino.
 ```
-python3 main.py --modo treino --diretorio <dataset path>
+python3 Celero.py --modo treino --diretorio <dataset path>
 ```
 * E o modo execução, onde ao ser inputado um arquivo texto com uma review de um filme, a AI deve retornar se este comentário é um comentário de cunho positivo ou negativo.
 ```
-python3 main.py --modo execucao --diretorio <file path>
+python3 Celero.py --modo execucao --diretorio <file path>
 ```
 ## Considerações iniciais:
 * O problema se trata de uma inteligência artificial NLP (Natural Language Processing). Para AI's deste tipo, tanto Machine Learning como Redes neurais são possíveis.
