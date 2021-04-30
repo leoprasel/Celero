@@ -1,6 +1,6 @@
 # Celero - Desafio para desenvolvedor de AI
 ## ENGLISH
-## Objetivo:
+## Project goals:
 In this project we will use a movie review database from IMDB comentary section made available in an open source way by [Stanford university](https://ai.stanford.edu/~amaas/data/sentiment/).
 
 The main goal is to train an artificial intelligence that has two modes: 
